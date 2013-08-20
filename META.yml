@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:               Copy-From-Git
-version:            0.000302
+version:            0.0.3_03
 abstract:           Pull upstream source into package directory
 author:
     - Peter Blair (pblair@tucows.com)

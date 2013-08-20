@@ -3,14 +3,14 @@ use strict;
 package Copy::From::Git;
 
 use File::Basename;
-
-our $VERSION = 0.0003_02;
+use version;
+our $VERSION = '0.0.3_03';
 
 sub new {
 	my $class = shift;
 
 	my $args = {
-		server => 'guthub.com',
+		server => 'github.com',
 		path   => undef, 
 		repo   => undef,
 		branch => 'master',
@@ -50,7 +50,7 @@ sub cleanup {
 	my ($self) = @_;
 
 	print "Cleaning up $self->{target}..\n";
-	system( "rm -rI $self->{target}" );
+	system( "rm -rf $self->{target}" );
 }
 
 sub copy {
@@ -62,7 +62,10 @@ sub copy {
 	for my $k ( keys %{$self->{files}} ){
 		print "Finding [$k]..\n";
 		my $target = ${self}->{files}->{"$k"};
-		my @f = grep { /$k/ } @files;
+		my @f = grep { if( /$k/ ){
+				$_ = $1 or $0;
+			}
+		} @files;
 
 		#print "Target: [$target]\n";
 
